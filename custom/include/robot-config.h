@@ -4,6 +4,18 @@ using namespace vex;
 
 extern brain Brain;
 
+// Ryan Externs
+extern motor lower_intake;
+extern motor upper_intake;
+extern digital_out match_loader;
+extern digital_out middle_piston;
+extern digital_out descore;
+extern digital_out match_loader_state;
+extern digital_out descore_state;
+extern digital_out middle_piston_state;
+extern rotation vertical_tracker;
+extern rotation horizontal_tracker;
+
 // VEXcode devices
 extern controller controller_1;
 extern motor left_chassis1;

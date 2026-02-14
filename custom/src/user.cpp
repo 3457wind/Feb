@@ -5,19 +5,20 @@
 // Modify autonomous, driver, or pre-auton code below
 
 void runAutonomous() {
-  int auton_selected = 3;
-  switch(auton_selected) {
+  int auton_selected = 1;
+  switch (auton_selected) {
     case 1:
       exampleAuton();
       break;
     case 2:
       exampleAuton2();
-      break;  
+      break;
     case 3:
       redGoalRush();
       break;
     case 4:
-      break; 
+      left_4ball();
+      break;
     case 5:
       break;
     case 6:
@@ -25,8 +26,15 @@ void runAutonomous() {
     case 7:
       break;
     case 8:
+      alliance_solo();
       break;
     case 9:
+      break;
+    case 10:
+      break;
+    case 11:
+      break;
+    case 12:
       break;
   }
 }
@@ -39,8 +47,19 @@ bool button_up_arrow, button_down_arrow, button_left_arrow, button_right_arrow;
 int chassis_flag = 0;
 
 void runDriver() {
+  bool match_loader_state = false;
+  bool midDS_state = false;
+  bool descore_state = false;
+  bool middle_piston_state = false;
+
+  // button edge tracking (so toggle only happens once per press)
+  bool last_y = false;
+  bool last_b = false;
+  bool last_a = false;
+
   stopChassis(coast);
   heading_correction = false;
+
   while (true) {
     // [-100, 100] for controller stick axis values
     ch1 = controller_1.Axis1.value();
@@ -62,17 +81,63 @@ void runDriver() {
     button_left_arrow = controller_1.ButtonLeft.pressing();
     button_right_arrow = controller_1.ButtonRight.pressing();
 
-    // default tank drive or replace it with your preferred driver code here: 
-    driveChassis(ch3 * 0.12, ch2 * 0.12);
+    // -----------------------------
+    // TOGGLES (independent)
+    // -----------------------------
+    if (button_y && !last_y) {
+      match_loader_state = !match_loader_state;
+      match_loader.set(match_loader_state);
+    }
 
-    wait(10, msec); 
+    if (button_b && !last_b) {
+      descore_state = !descore_state;
+      descore.set(descore_state);
+    }
+
+    if (button_a && !last_a) {
+      middle_piston_state = !middle_piston_state;
+      middle_piston.set(middle_piston_state);
+    }
+
+    last_y = button_y;
+    last_b = button_b;
+    last_a = button_a;
+
+    // -----------------------------
+    // INTAKES (independent)
+    // -----------------------------
+    // lower intake on L1/L2
+    if (l1) {
+      lower_intake.spin(fwd, 100, pct);
+    } else if (l2) {
+      lower_intake.spin(reverse, 100, pct);
+    } else {
+      lower_intake.stop(coast);
+    }
+
+    // upper intake on R1/R2 (R1 slow if middle piston is true)
+    if (r1 && middle_piston_state == true) {
+      upper_intake.spin(fwd, 50, pct);
+    } else if (r1) {
+      upper_intake.spin(fwd, 100, pct);
+    } else if (r2) {
+      upper_intake.spin(reverse, 100, pct);
+    } else {
+      upper_intake.stop(coast);
+    }
+
+    // default tank drive or replace it with your preferred driver code here:
+    // driveChassis(ch3 * 0.12, ch2 * 0.12); // tank mode
+    driveChassis(ch3 * 0.06 + ch1 * 0.06, ch3 * 0.06 - ch1 * 0.06); // arcade mode
+
+    wait(10, msec);
   }
 }
 
 void runPreAutonomous() {
-    // Initializing Robot Configuration. DO NOT REMOVE!
+  // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-  
+
   // Calibrate inertial sensor
   inertial_sensor.calibrate();
 
@@ -83,10 +148,10 @@ void runPreAutonomous() {
 
   double current_heading = inertial_sensor.heading();
   Brain.Screen.print(current_heading);
-  
+
   // odom tracking
   resetChassis();
-  if(using_horizontal_tracker && using_vertical_tracker) {
+  if (using_horizontal_tracker && using_vertical_tracker) {
     thread odom = thread(trackXYOdomWheel);
   } else if (using_horizontal_tracker) {
     thread odom = thread(trackXOdomWheel);
@@ -96,3 +161,4 @@ void runPreAutonomous() {
     thread odom = thread(trackNoOdomWheel);
   }
 }
+

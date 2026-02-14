@@ -12,16 +12,72 @@
 // Call these functions from custom/include/user.cpp
 // Format: returnType functionName() { code }
 
+// Ryan Auto
+
+void left_4ball() // case 4
+{
+  lower_intake.spin(fwd, 80, pct);
+  driveTo(28, 2000, true, 6);
+  turnToAngle(330, 2000, true);
+  driveTo(10, 2000, true, 6);
+  turnToAngle(225, 2000, true);
+  driveTo(34.5, 2000, true);
+  turnToAngle(180, 2000, true);
+  driveTo(-18, 2000, true);
+  lower_intake.spin(fwd, 100, pct);
+  upper_intake.spin(fwd, 100, pct);
+}
+
+void alliance_solo() // case 8
+{
+  lower_intake.spin(fwd,90, pct);
+  driveTo(54,3000,true,9);
+  wait(200, msec);
+  turnToAngle(90,1000,true,6);
+  match_loader.set(true);
+  wait(200, msec);
+  driveTo(18,15000,true,6);
+  wait(900,msec);
+  driveTo(-43,1750,true,4);
+  wait(300,msec);
+  upper_intake.spin(fwd,100,pct);
+  wait(1200,msec);
+  upper_intake.stop(coast);
+  match_loader.set(false);
+  driveTo(24,1500,true,6);
+  turnToAngle(225,1250,true,6);
+  driveTo(36,1000,true,9);
+  wait(500,msec);
+  turnToAngle(180,750,true,9);
+  driveTo(54,2750,true,9);
+  turnToAngle(135,500,true,12);
+  
+}
+
+
 void exampleAuton() {
-  // Use this for tuning linear and turn pid
-  driveTo(60, 3000);
-  turnToAngle(90, 2000);
-  turnToAngle(135, 2000);
-  turnToAngle(150, 2000);
-  turnToAngle(160, 2000);
-  turnToAngle(165, 2000);
-  turnToAngle(0, 2000);
-  driveTo(-60, 3000);
+  lower_intake.spin(fwd,90, pct);
+  driveTo(55,3000,true,9);
+  wait(200, msec);
+  turnToAngle(-90,1000,true,6);
+  match_loader.set(true);
+  wait(200, msec);
+  driveTo(18,15000,true,6);
+  wait(800,msec);
+  driveTo(-43,1800,true,5);
+  wait(300,msec);
+  upper_intake.spin(fwd,100,pct);
+  wait(1200,msec);
+  match_loader.set(false);
+  upper_intake.stop(coast);
+  driveTo(26,1500,true,6);
+  turnToAngle(-225,1250,true,6);
+  driveTo(36,1000,true,9);
+  wait(2000,msec);
+  turnToAngle(-45,750,true,9);
+  middle_piston.set(true);
+  driveTo(-18,1250,true,6);
+  upper_intake.spin(reverse,45,pct);
 }
 
 void exampleAuton2() {

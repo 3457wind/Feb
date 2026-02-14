@@ -16,19 +16,29 @@ controller controller_1 = controller(primary);
 // gearSetting is one of the following: ratio36_1(red), ratio18_1(green), ratio6_1(blue)
 // all chassis motors should be reversed appropriately so that they spin vertical when given a positive voltage input
 // such as driveChassis(12, 12)
-motor left_chassis1 = motor(PORT5, ratio6_1, true);
-motor left_chassis2 = motor(PORT6, ratio6_1, true);
-motor left_chassis3 = motor(PORT7, ratio6_1, false);
+motor left_chassis1 = motor(PORT15, ratio6_1, true);
+motor left_chassis2 = motor(PORT14, ratio6_1, true);
+motor left_chassis3 = motor(PORT9, ratio6_1, true);
 motor_group left_chassis = motor_group(left_chassis1, left_chassis2, left_chassis3);
-motor right_chassis1 = motor(PORT3, ratio6_1, false);
-motor right_chassis2 = motor(PORT4, ratio6_1, false);
-motor right_chassis3 = motor(PORT11, ratio6_1, true);
+motor right_chassis1 = motor(PORT20, ratio6_1, false);
+motor right_chassis2 = motor(PORT18, ratio6_1, false);
+motor right_chassis3 = motor(PORT17, ratio6_1, false);
 motor_group right_chassis = motor_group(right_chassis1, right_chassis2, right_chassis3);
 
-inertial inertial_sensor = inertial(PORT9);
-optical example_optical_sensor = optical(PORT10);
+inertial inertial_sensor = inertial(PORT6);
+
+// Ryan user control
+motor lower_intake = motor(PORT1, ratio6_1, false);
+motor upper_intake = motor(PORT21, ratio6_1, false);
+digital_out match_loader = digital_out(Brain.ThreeWirePort.A);
+digital_out descore = digital_out(Brain.ThreeWirePort.C);
+digital_out middle_piston = digital_out(Brain.ThreeWirePort.B);
+
+
+// RW Template Stuff
+optical example_optical_sensor = optical(PORT21);
 distance example_distance_sensor = distance(PORT14);
-digital_out example_piston = digital_out(Brain.ThreeWirePort.A);
+digital_out example_piston = digital_out(Brain.ThreeWirePort.D);
 
 // Format is rotation(port, reversed)
 // just set these to random ports if you don't use tracking wheels
@@ -36,15 +46,15 @@ rotation horizontal_tracker = rotation(PORT13, true);
 rotation vertical_tracker = rotation(PORT19, true);
 
 // game specific devices for high stakes
-motor arm_motor1 = motor(PORT2, ratio18_1, true);
-motor arm_motor2 = motor(PORT1, ratio18_1, false);
+motor arm_motor1 = motor(PORT8, ratio18_1, true);
+motor arm_motor2 = motor(PORT11, ratio18_1, false);
 motor_group arm_motor = motor_group(arm_motor1, arm_motor2);
-motor intake_motor = motor(PORT8, ratio18_1, true);
+motor intake_motor = motor(PORT12, ratio18_1, true);
 digital_out claw = digital_out(Brain.ThreeWirePort.F);
 digital_out rush_arm = digital_out(Brain.ThreeWirePort.G);
-optical optical_sensor = optical(PORT18);
-distance intake_distance = distance(PORT20);
-distance clamp_distance = distance(PORT12);
+optical optical_sensor = optical(PORT15);
+distance intake_distance = distance(PORT16);
+distance clamp_distance = distance(PORT17);
 digital_out mogo_mech = digital_out(Brain.ThreeWirePort.E);
 
 // ============================================================================
@@ -55,7 +65,7 @@ digital_out mogo_mech = digital_out(Brain.ThreeWirePort.E);
 double distance_between_wheels = 12.3;
 
 // motor to wheel gear ratio * wheel diameter (in inches) * pi
-double wheel_distance_in = (36.0 / 48.0) * 3.17 * M_PI;
+double wheel_distance_in = (48/36) * 2.75 * M_PI;
 
 // PID Constants for movement
 // distance_* : Linear PID for straight driving
