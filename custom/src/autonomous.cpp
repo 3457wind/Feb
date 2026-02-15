@@ -63,7 +63,7 @@ void exampleAuton() {
   match_loader.set(true);
   wait(200, msec);
   driveTo(18,15000,true,6);
-  wait(800,msec);
+  wait(700,msec);
   driveTo(-43,1800,true,5);
   wait(300,msec);
   upper_intake.spin(fwd,100,pct);
@@ -76,8 +76,8 @@ void exampleAuton() {
   wait(2000,msec);
   turnToAngle(-45,750,true,9);
   middle_piston.set(true);
-  driveTo(-18,1250,true,6);
-  upper_intake.spin(reverse,45,pct);
+  driveTo(-22,1750,true,6);
+  upper_intake.spin(fwd,45,pct);
 }
 
 void exampleAuton2() {
