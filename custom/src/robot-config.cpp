@@ -27,7 +27,7 @@ motor_group right_chassis = motor_group(right_chassis1, right_chassis2, right_ch
 
 inertial inertial_sensor = inertial(PORT6);
 
-// Ryan user control
+// RW user control
 motor lower_intake = motor(PORT1, ratio6_1, false);
 motor upper_intake = motor(PORT21, ratio6_1, false);
 digital_out match_loader = digital_out(Brain.ThreeWirePort.A);
@@ -41,7 +41,7 @@ distance example_distance_sensor = distance(PORT14);
 digital_out example_piston = digital_out(Brain.ThreeWirePort.D);
 
 // Format is rotation(port, reversed)
-// just set these to random ports if you don't use tracking wheels
+// just set these to random ports if no tracking wheels
 rotation horizontal_tracker = rotation(PORT13, true);
 rotation vertical_tracker = rotation(PORT19, true);
 

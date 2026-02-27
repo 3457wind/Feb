@@ -1,6 +1,28 @@
 #include "vex.h"
 #include "motor-control.h"
 #include "../custom/include/autonomous.h"
+#include <cmath>
+#include <algorithm>
+
+// -----------------------------
+// Expo + deadband helpers
+// -----------------------------
+
+// optional deadband for joystick drift
+int applyDeadband(int v, int db = 5) //function defined w output int, and input of int v and db
+{
+  return (std::abs(v) < db) ? 0 : v; //if return(stuff) is true - return 0, else return v
+}
+
+// input: -100..100  output: -100..100
+double expoStick(double x, double expo)//function defined with output deci and inputs decis x and expo
+{
+  double sign = (x < 0) ? -1.0 : 1.0;//output deci, if x<0, output -1, else 1 
+  double ax = std::fabs(x) / 100.0; //out deci
+  // blend linear + cubic
+  double shaped = (1.0 - expo) * ax + expo * (ax * ax * ax); // linear shallows the cubic curve. if squared, faster mid range, but cubic is softer mid range. 
+  return sign * shaped * 100.0; // retun the right sign, mixed output and 100 scale
+}
 
 // Modify autonomous, driver, or pre-auton code below
 
@@ -126,9 +148,31 @@ void runDriver() {
       upper_intake.stop(coast);
     }
 
-    // default tank drive or replace it with your preferred driver code here:
-    // driveChassis(ch3 * 0.12, ch2 * 0.12); // tank mode
-    driveChassis(ch3 * 0.06 + ch1 * 0.06, ch3 * 0.06 - ch1 * 0.06); // arcade mode
+    // -----------------------------
+    // EXPO ARCADE DRIVE
+    // -----------------------------
+    int fwd_with_deadband  = applyDeadband(ch3, 5);
+    int turn_with_deadband = applyDeadband(ch1, 5);
+
+    // tune these (0.0 = linear, 1.0 = very soft center)
+    double expo_fwd  = 0.45; //increasing makes it softer around a larger radius
+    double expo_turn = 0.60;//increasing this increase cubic weightage bc of our equation. inc cubic weightage causes a softer mid range(deeper curve)
+
+    double fwd  = expoStick((double)fwd_with_deadband, expo_fwd);
+    double turn = expoStick((double)turn_with_deadband, expo_turn);
+
+    // overall driver speed caps
+    double fwd_cap  = 0.90;
+    double turn_cap = 0.80;
+
+    double left  = (fwd * fwd_cap) + (turn * turn_cap);
+    double right = (fwd * fwd_cap) - (turn * turn_cap);
+
+    // clamp to [-100, 100]
+    left  = std::max(-100.0, std::min(100.0, left));
+    right = std::max(-100.0, std::min(100.0, right));
+
+    driveChassis(left, right);
 
     wait(10, msec);
   }
@@ -161,4 +205,3 @@ void runPreAutonomous() {
     thread odom = thread(trackNoOdomWheel);
   }
 }
-

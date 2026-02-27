@@ -56,10 +56,36 @@ void alliance_solo() // case 8
 
 
 void exampleAuton() {
-  lower_intake.spin(fwd,90, pct);
-  driveTo(55,3000,true,9);
+  driveTo(46,2900,true,9);
   wait(200, msec);
+  match_loader.set(true);
   turnToAngle(-90,1000,true,6);
+  match_loader.set(true);
+  wait(100, msec);
+  lower_intake.spin(fwd,90, pct);
+  driveTo(18,1300,true,6);
+  wait(200,msec);
+  driveTo(-43,1700,true,5);
+  wait(300,msec);
+  upper_intake.spin(fwd,100,pct);
+  wait(1200,msec);
+  match_loader.set(false);
+  upper_intake.stop(coast);
+  driveTo(22,1500,true,6);
+  turnToAngle(-225,1250,true,6);
+  driveTo(36,1000,true,9);
+  wait(1500,msec);
+  turnToAngle(-45,1250,true,9);
+  match_loader.set(true);
+  driveTo(-25,1750,true,6);
+  upper_intake.spin(fwd,55,pct);
+}
+
+void exampleAuton2() {
+   lower_intake.spin(fwd,90, pct);
+  driveTo(46,3000,true,9);
+  wait(200, msec);
+  turnToAngle(90,1000,true,6);
   match_loader.set(true);
   wait(200, msec);
   driveTo(18,15000,true,6);
@@ -71,24 +97,14 @@ void exampleAuton() {
   match_loader.set(false);
   upper_intake.stop(coast);
   driveTo(26,1500,true,6);
-  turnToAngle(-225,1250,true,6);
+  turnToAngle(225,1250,true,6);
   driveTo(36,1000,true,9);
   wait(2000,msec);
-  turnToAngle(-45,750,true,9);
-  middle_piston.set(true);
-  driveTo(-22,1750,true,6);
-  upper_intake.spin(fwd,45,pct);
-}
-
-void exampleAuton2() {
-  moveToPoint(24, 24, 1, 2000, false);
-  moveToPoint(48, 48, 1, 2000, true);
-  moveToPoint(24, 24, -1, 2000, true);
-  moveToPoint(0, 0, 1, 2000, true);
-  correct_angle = 0;
-  driveTo(24, 2000, false, 8);
-  turnToAngle(90, 800, false);
-  turnToAngle(180, 800, true);
+  turnToAngle(45,750,true,9);
+  driveTo(36,1000,true,9);
+  turnToAngle(90,750,true,9);
+  driveTo(-26,1500,true,6);
+  upper_intake.spin(fwd,100,pct);
 }
 
 double arm_pid_target = 0, arm_load_target = 60, arm_store_target = 250, arm_score_target = 470;
