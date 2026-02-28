@@ -151,19 +151,19 @@ void runDriver() {
     // -----------------------------
     // EXPO ARCADE DRIVE
     // -----------------------------
-    int fwd_with_deadband  = applyDeadband(ch3, 5);
-    int turn_with_deadband = applyDeadband(ch1, 5);
+    int fwd_with_deadband  = applyDeadband(ch3, 0);
+    int turn_with_deadband = applyDeadband(ch1, 0);
 
     // tune these (0.0 = linear, 1.0 = very soft center)
-    double expo_fwd  = 0.45; //increasing makes it softer around a larger radius
-    double expo_turn = 0.60;//increasing this increase cubic weightage bc of our equation. inc cubic weightage causes a softer mid range(deeper curve)
+    double expo_fwd  = 0.70; //increasing makes it softer around a larger radius
+    double expo_turn = 1;//increasing this increase cubic weightage bc of our equation. inc cubic weightage causes a softer mid range(deeper curve)
 
     double fwd  = expoStick((double)fwd_with_deadband, expo_fwd);
-    double turn = expoStick((double)turn_with_deadband, expo_turn);
+    double turn = expoStick((double)turn_with_deadband, expo_turn) ;
 
     // overall driver speed caps
-    double fwd_cap  = 0.90;
-    double turn_cap = 0.80;
+    double fwd_cap  = 0.65;
+    double turn_cap = 0.70;//how close caps are to each other affects turning while driving 
 
     double left  = (fwd * fwd_cap) + (turn * turn_cap);
     double right = (fwd * fwd_cap) - (turn * turn_cap);
@@ -172,7 +172,7 @@ void runDriver() {
     left  = std::max(-100.0, std::min(100.0, left));
     right = std::max(-100.0, std::min(100.0, right));
 
-    driveChassis(left, right);
+    driveChassis(left, 0.9 * right);
 
     wait(10, msec);
   }
