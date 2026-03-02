@@ -9,7 +9,7 @@
 // -----------------------------
 
 // optional deadband for joystick drift
-int applyDeadband(int v, int db = 5) //function defined w output int, and input of int v and db
+int applyDeadband(int v, int db) //function defined w output int, and input of int v and db
 {
   return (std::abs(v) < db) ? 0 : v; //if return(stuff) is true - return 0, else return v
 }
@@ -148,37 +148,55 @@ void runDriver() {
       upper_intake.stop(coast);
     }
 
-    // -----------------------------
     // EXPO ARCADE DRIVE
-    // -----------------------------
-    int fwd_with_deadband  = applyDeadband(ch3, 1);
-    int turn_with_deadband = applyDeadband(ch1, 1);
+  int fwd_raw  = ch3;   // or your deadband version
+  int turn_raw = ch1;
 
-    // tune these (0.0 = linear, 1.0 = very soft center)
-    double expo_fwd  = 0; //increasing makes it softer around a larger radius
-    double expo_turn = 0;//increasing this increase cubic weightage bc of our equation. inc cubic weightage causes a softer mid range(deeper curve)
+  //0 is linear, 1 is very soft center (full cubic)
+  double expo_fwd  = 0.0;
+  double expo_turn = 0.0;
 
-    double fwd  = expoStick((double)fwd_with_deadband, expo_fwd);
-    double turn = expoStick((double)turn_with_deadband, expo_turn) ;
+  double fwd  = expoStick((double)fwd_raw,  expo_fwd);
+  double turn = expoStick((double)turn_raw, expo_turn);
 
-    // overall driver speed caps
-    double fwd_cap  = 0.115;
-    double turn_cap = 0.115;//how close caps are to each other affects turning while driving 
+  // -----------------------------
+  // MODE SETTINGS
+  // -----------------------------
+  double fwd_cap, turn_cap;
 
-    double left  = 1.1 * ((fwd * fwd_cap) + (turn * turn_cap));
-    double right = 0.85 * ((fwd * fwd_cap) - (turn * turn_cap));
+  double fast_fwd_cap  = 0.75;  // fast straight speed
+  double fast_turn_cap = 0.5;  // less turning authority in fast mode (tune)
 
-    // clamp to [-100, 100]
-    left  = std::max(-100.0, std::min(100.0, left));
-    right = std::max(-100.0, std::min(100.0, right));
+  double slow_cap = 0.1;       // precision mode speed
+ 
+  // When do you enter slow mode?
+  double turn_threshold = 10;   // raise/lower (5 is tiny; 10–20 feels better)
 
-    driveChassis(left, right);
-
-    wait(10, msec);
+  // Choose caps based on turning amount
+  if (std::fabs(turn_raw) > turn_threshold) 
+  {
+    fwd_cap  = slow_cap;    // same
+    turn_cap = slow_cap;   // same  -> 1:1 ratio
   }
-}
+  else
+  {
+    fwd_cap= fast_fwd_cap;   // faster
+    turn_cap = fast_turn_cap; // same  -> more forward authority when going straight
+  }
 
-void runPreAutonomous() {
+  double left  = (fwd * fwd_cap) + (turn * turn_cap);
+  double right = (fwd * fwd_cap) - (turn * turn_cap);
+
+  // clamp
+  left  = std::max(-100.0, std::min(100.0, left));
+  right = std::max(-100.0, std::min(100.0, right));
+
+  driveChassis(left, right);
+  wait(10,msec);
+}
+}
+void runPreAutonomous()
+{
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
 
