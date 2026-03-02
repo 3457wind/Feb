@@ -55,30 +55,28 @@ void alliance_solo() // case 8
 }
 
 
-void exampleAuton() {
-  driveTo(46,2900,true,9);
-  wait(200, msec);
+void leftAuton() {
+  driveTo(29.75,2750,true,9);
+  wait(250, msec);
   match_loader.set(true);
-  turnToAngle(-90,1000,true,6);
-  match_loader.set(true);
+  turnToAngle(90,1000,true,6);
   wait(100, msec);
   lower_intake.spin(fwd,90, pct);
-  driveTo(18,1300,true,6);
-  wait(200,msec);
-  driveTo(-43,1700,true,5);
+  driveTo(19,1300,true,7);
   wait(300,msec);
+  driveTo(-42,1750,true,4);
+  wait(250,msec);
   upper_intake.spin(fwd,100,pct);
-  wait(1200,msec);
-  match_loader.set(false);
+  wait(1000,msec);
   upper_intake.stop(coast);
-  driveTo(22,1500,true,6);
-  turnToAngle(-225,1250,true,6);
-  driveTo(36,1000,true,9);
-  wait(1500,msec);
-  turnToAngle(-45,1250,true,9);
-  match_loader.set(true);
-  driveTo(-25,1750,true,6);
-  upper_intake.spin(fwd,55,pct);
+  match_loader.set(false);
+  driveTo(18,1100,true,6);
+  turnToAngle(225,1000,true,6);
+  driveTo(36,1000,true,6);
+  wait(500,msec);
+  lower_intake.stop(coast);
+  driveTo(33,1000,true,6);
+  lower_intake.spin(reverse,25,pct);
 }
 
 void exampleAuton2() {

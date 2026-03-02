@@ -36,8 +36,8 @@ digital_out middle_piston = digital_out(Brain.ThreeWirePort.B);
 
 
 // RW Template Stuff
-optical example_optical_sensor = optical(PORT21);
-distance example_distance_sensor = distance(PORT14);
+optical example_optical_sensor = optical(PORT20);
+distance example_distance_sensor = distance(PORT20);
 digital_out example_piston = digital_out(Brain.ThreeWirePort.D);
 
 // Format is rotation(port, reversed)
@@ -52,9 +52,9 @@ motor_group arm_motor = motor_group(arm_motor1, arm_motor2);
 motor intake_motor = motor(PORT12, ratio18_1, true);
 digital_out claw = digital_out(Brain.ThreeWirePort.F);
 digital_out rush_arm = digital_out(Brain.ThreeWirePort.G);
-optical optical_sensor = optical(PORT15);
+optical optical_sensor = optical(PORT20);
 distance intake_distance = distance(PORT16);
-distance clamp_distance = distance(PORT17);
+distance clamp_distance = distance(PORT20);
 digital_out mogo_mech = digital_out(Brain.ThreeWirePort.E);
 
 // ============================================================================
@@ -65,7 +65,7 @@ digital_out mogo_mech = digital_out(Brain.ThreeWirePort.E);
 double distance_between_wheels = 12.3;
 
 // motor to wheel gear ratio * wheel diameter (in inches) * pi
-double wheel_distance_in = (48/36) * 2.75 * M_PI;
+double wheel_distance_in = (36.0/48.0) * 2.75 * M_PI;
 
 // PID Constants for movement
 // distance_* : Linear PID for straight driving

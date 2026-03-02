@@ -20,7 +20,7 @@ double expoStick(double x, double expo)//function defined with output deci and i
   double sign = (x < 0) ? -1.0 : 1.0;//output deci, if x<0, output -1, else 1 
   double ax = std::fabs(x) / 100.0; //out deci
   // blend linear + cubic
-  double shaped = (1.0 - expo) * ax + expo * (ax * ax * ax); // linear shallows the cubic curve. if squared, faster mid range, but cubic is softer mid range. 
+  double shaped = (1.0 - expo) * ax + expo * (ax * ax * ax ); // linear shallows the cubic curve. if squared, faster mid range, but cubic is softer mid range. 
   return sign * shaped * 100.0; // retun the right sign, mixed output and 100 scale
 }
 
@@ -30,7 +30,7 @@ void runAutonomous() {
   int auton_selected = 1;
   switch (auton_selected) {
     case 1:
-      exampleAuton();
+      leftAuton();
       break;
     case 2:
       exampleAuton2();
@@ -151,19 +151,19 @@ void runDriver() {
     // -----------------------------
     // EXPO ARCADE DRIVE
     // -----------------------------
-    int fwd_with_deadband  = applyDeadband(ch3, 0);
-    int turn_with_deadband = applyDeadband(ch1, 0);
+    int fwd_with_deadband  = applyDeadband(ch3, 1);
+    int turn_with_deadband = applyDeadband(ch1, 1);
 
     // tune these (0.0 = linear, 1.0 = very soft center)
-    double expo_fwd  = 0.70; //increasing makes it softer around a larger radius
-    double expo_turn = 1;//increasing this increase cubic weightage bc of our equation. inc cubic weightage causes a softer mid range(deeper curve)
+    double expo_fwd  = 0; //increasing makes it softer around a larger radius
+    double expo_turn = 0;//increasing this increase cubic weightage bc of our equation. inc cubic weightage causes a softer mid range(deeper curve)
 
     double fwd  = expoStick((double)fwd_with_deadband, expo_fwd);
     double turn = expoStick((double)turn_with_deadband, expo_turn) ;
 
     // overall driver speed caps
-    double fwd_cap  = 0.65;
-    double turn_cap = 0.70;//how close caps are to each other affects turning while driving 
+    double fwd_cap  = 0.15;
+    double turn_cap = 0.15;//how close caps are to each other affects turning while driving 
 
     double left  = (fwd * fwd_cap) + (turn * turn_cap);
     double right = (fwd * fwd_cap) - (turn * turn_cap);
@@ -172,7 +172,7 @@ void runDriver() {
     left  = std::max(-100.0, std::min(100.0, left));
     right = std::max(-100.0, std::min(100.0, right));
 
-    driveChassis(left, 0.9 * right);
+    driveChassis(left, 0.85 * right);
 
     wait(10, msec);
   }
