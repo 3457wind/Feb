@@ -56,7 +56,7 @@ void alliance_solo() // case 8
 
 
 void leftAuton() {
-  driveTo(29.75,2750,true,9);
+  driveTo(30,2750,true,9);
   wait(250, msec);
   match_loader.set(true);
   turnToAngle(90,1000,true,6);

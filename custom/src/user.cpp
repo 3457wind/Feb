@@ -162,17 +162,17 @@ void runDriver() {
     double turn = expoStick((double)turn_with_deadband, expo_turn) ;
 
     // overall driver speed caps
-    double fwd_cap  = 0.15;
-    double turn_cap = 0.15;//how close caps are to each other affects turning while driving 
+    double fwd_cap  = 0.115;
+    double turn_cap = 0.115;//how close caps are to each other affects turning while driving 
 
-    double left  = (fwd * fwd_cap) + (turn * turn_cap);
-    double right = (fwd * fwd_cap) - (turn * turn_cap);
+    double left  = 1.1 * ((fwd * fwd_cap) + (turn * turn_cap));
+    double right = 0.85 * ((fwd * fwd_cap) - (turn * turn_cap));
 
     // clamp to [-100, 100]
     left  = std::max(-100.0, std::min(100.0, left));
     right = std::max(-100.0, std::min(100.0, right));
 
-    driveChassis(left, 0.85 * right);
+    driveChassis(left, right);
 
     wait(10, msec);
   }
