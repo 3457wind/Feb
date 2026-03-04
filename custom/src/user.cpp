@@ -164,13 +164,13 @@ void runDriver() {
   // -----------------------------
   double fwd_cap, turn_cap;
 
-  double fast_fwd_cap  = 0.75;  // fast straight speed
-  double fast_turn_cap = 0.5;  // less turning authority in fast mode (tune)
+  double fast_fwd_cap  = 0.3;  // fast straight speed
+  double fast_turn_cap = 0.3;  // less turning authority in fast mode (tune)
 
-  double slow_cap = 0.1;       // precision mode speed
+  double slow_cap = 0.075;       // precision mode speed
  
   // When do you enter slow mode?
-  double turn_threshold = 10;   // raise/lower (5 is tiny; 10–20 feels better)
+  double turn_threshold = 7.5;   // raise/lower (5 is tiny; 10–20 feels better)
 
   // Choose caps based on turning amount
   if (std::fabs(turn_raw) > turn_threshold) 
@@ -184,8 +184,8 @@ void runDriver() {
     turn_cap = fast_turn_cap; // same  -> more forward authority when going straight
   }
 
-  double left  = (fwd * fwd_cap) + (turn * turn_cap);
-  double right = (fwd * fwd_cap) - (turn * turn_cap);
+  double left  = 1.1 * ((fwd * fwd_cap) + (turn * turn_cap));
+  double right = 0.9 * ((fwd * fwd_cap) - (turn * turn_cap));
 
   // clamp
   left  = std::max(-100.0, std::min(100.0, left));

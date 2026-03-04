@@ -16,16 +16,28 @@
 
 void left_4ball() // case 4
 {
-  lower_intake.spin(fwd, 80, pct);
-  driveTo(28, 2000, true, 6);
-  turnToAngle(330, 2000, true);
-  driveTo(10, 2000, true, 6);
-  turnToAngle(225, 2000, true);
-  driveTo(34.5, 2000, true);
-  turnToAngle(180, 2000, true);
-  driveTo(-18, 2000, true);
-  lower_intake.spin(fwd, 100, pct);
-  upper_intake.spin(fwd, 100, pct);
+ driveTo(30,2750,true,9);
+  wait(250, msec);
+  match_loader.set(true);
+  descore.set(true);
+  turnToAngle(90,1000,true,6);
+  wait(100, msec);
+  lower_intake.spin(fwd,90, pct);
+  driveTo(19,1300,true,7);
+  wait(1000,msec);
+  driveTo(-42,1750,true,4);
+  match_loader.set(false);
+  driveTo(18,1100,true,6);
+  turnToAngle(45,1000,true,6);
+  driveTo(8*sqrt(2),1000,true,6);
+  wait(500,msec);
+  turnToAngle(90,1000,true,6);
+  driveTo(-112,2000,true,6);
+  turnToAngle(-45,1000,true,6);
+  driveTo(-8*sqrt(2),1000,true,6);
+  turnToAngle(-90,1000,true,6);
+  driveTo(-19,1500,true,6);
+
 }
 
 void alliance_solo() // case 8
