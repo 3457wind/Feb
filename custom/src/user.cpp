@@ -30,10 +30,10 @@ void runAutonomous() {
   int auton_selected = 1;
   switch (auton_selected) {
     case 1:
-      leftAuton();
+      leftAuton();//right
       break;
     case 2:
-      exampleAuton2();
+      exampleAuton2();//left
       break;
     case 3:
       redGoalRush();
@@ -149,50 +149,44 @@ void runDriver() {
     }
 
     // EXPO ARCADE DRIVE
-  int fwd_raw  = ch3;   // or your deadband version
-  int turn_raw = ch1;
+  int fwd_raw  = ch3;
+int turn_raw = ch1;
 
-  //0 is linear, 1 is very soft center (full cubic)
-  double expo_fwd  = 0.0;
-  double expo_turn = 0.0;
+// tune these
+double turn_start = 5;    // start blending here
+double turn_full  = 25;   // fully in slow mode here
 
-  double fwd  = expoStick((double)fwd_raw,  expo_fwd);
-  double turn = expoStick((double)turn_raw, expo_turn);
+double absTurn = std::fabs((double)turn_raw);
 
-  // -----------------------------
-  // MODE SETTINGS
-  // -----------------------------
-  double fwd_cap, turn_cap;
+// t goes 0->1 as absTurn goes turn_start->turn_full
+double t = (absTurn - turn_start) / (turn_full - turn_start);
+t = std::max(0.0, std::min(1.0, t));
 
-  double fast_fwd_cap  = 0.3;  // fast straight speed
-  double fast_turn_cap = 0.3;  // less turning authority in fast mode (tune)
+// optional: smoothstep so it ramps gently (less “kink”)
+t = t * t * (3.0 - 2.0 * t);
 
-  double slow_cap = 0.075;       // precision mode speed
- 
-  // When do you enter slow mode?
-  double turn_threshold = 7.5;   // raise/lower (5 is tiny; 10–20 feels better)
+// your caps
+double fast_fwd_cap  = 0.225;
+double fast_turn_cap = 0.225;
 
-  // Choose caps based on turning amount
-  if (std::fabs(turn_raw) > turn_threshold) 
-  {
-    fwd_cap  = slow_cap;    // same
-    turn_cap = slow_cap;   // same  -> 1:1 ratio
-  }
-  else
-  {
-    fwd_cap= fast_fwd_cap;   // faster
-    turn_cap = fast_turn_cap; // same  -> more forward authority when going straight
-  }
+double slow_cap = 0.075;        // 1:1 in slow mode
+double slow_fwd_cap  = slow_cap;
+double slow_turn_cap = slow_cap;
 
-  double left  = 1.1 * ((fwd * fwd_cap) + (turn * turn_cap));
-  double right = 0.9 * ((fwd * fwd_cap) - (turn * turn_cap));
+// lerp caps
+double fwd_cap  = fast_fwd_cap  + t * (slow_fwd_cap  - fast_fwd_cap);
+double turn_cap = fast_turn_cap + t * (slow_turn_cap - fast_turn_cap);
 
-  // clamp
-  left  = std::max(-100.0, std::min(100.0, left));
-  right = std::max(-100.0, std::min(100.0, right));
+double fwd  = expoStick((double)fwd_raw,  0.0);
+double turn = expoStick((double)turn_raw, 0.0);
 
-  driveChassis(left, right);
-  wait(10,msec);
+double left  = 1.1 * ((fwd * fwd_cap) + (turn * turn_cap));
+double right = 0.9 * ((fwd * fwd_cap) - (turn * turn_cap));
+
+left  = std::max(-100.0, std::min(100.0, left));
+right = std::max(-100.0, std::min(100.0, right));
+
+driveChassis(left, right);
 }
 }
 void runPreAutonomous()

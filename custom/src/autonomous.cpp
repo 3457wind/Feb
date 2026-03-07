@@ -16,27 +16,27 @@
 
 void left_4ball() // case 4
 {
- driveTo(30,2750,true,9);
-  wait(250, msec);
+  driveTo(30,2750,true,9);
+  wait(100, msec);
   match_loader.set(true);
-  descore.set(true);
   turnToAngle(90,1000,true,6);
   wait(100, msec);
   lower_intake.spin(fwd,90, pct);
-  driveTo(19,1300,true,7);
-  wait(1000,msec);
-  driveTo(-42,1750,true,4);
+  driveTo(18,1300,true,6);
+  wait(2000,msec);
+  driveTo(-42,2250,true,4);
+  wait(100,msec);
+  // upper_intake.spin(fwd,100,pct);
+  upper_intake.stop(coast);
   match_loader.set(false);
-  driveTo(18,1100,true,6);
-  turnToAngle(45,1000,true,6);
-  driveTo(8*sqrt(2),1000,true,6);
-  wait(500,msec);
+  descore.set(true);
+  driveTo(14,1000,true,6);
+  turnToAngle(45,1250,true,6);
+  driveTo(23,1000,true,6);
   turnToAngle(90,1000,true,6);
-  driveTo(-112,2000,true,6);
-  turnToAngle(-45,1000,true,6);
-  driveTo(-8*sqrt(2),1000,true,6);
-  turnToAngle(-90,1000,true,6);
-  driveTo(-19,1500,true,6);
+  driveTo(-135,5000,true,5);
+  turnToAngle(135,750,true,6);
+
 
 }
 
@@ -68,53 +68,59 @@ void alliance_solo() // case 8
 
 
 void leftAuton() {
-  driveTo(30,2750,true,9);
-  wait(250, msec);
+  driveTo(28.6,3100,true,8);
   match_loader.set(true);
   turnToAngle(90,1000,true,6);
+  lower_intake.spin(fwd,90, pct);
+  driveTo(19.5,1750,true,8);
+  wait(125,msec);
+  driveTo(-43,1750,true,4);
+  upper_intake.spin(fwd,100,pct);
+  wait(1500,msec);
+  upper_intake.stop(coast);
+  match_loader.set(false);
+  driveTo(15,1000,true,6);
+  turnToAngle(225,1250,true,6);
+  driveTo(34,1250,true,5);
+  match_loader.set(true);
+  driveTo(6,500,true,6);
+  wait(100,msec);
+  driveTo(-30,1850,true,4);
+  wait(300,msec);
+  match_loader.set(false);
+  wait(100,msec);
+  turnToAngle(90,1500,true,6);
+  driveTo(-42,1750,true,5);
+  upper_intake.spin(fwd,100,pct);
+}
+
+void exampleAuton2() {//left
+  driveTo(30,3000,true,9);
+  wait(250, msec);
+  match_loader.set(true);
+  turnToAngle(-90,1000,true,6);
   wait(100, msec);
   lower_intake.spin(fwd,90, pct);
-  driveTo(19,1300,true,7);
-  wait(300,msec);
+  driveTo(19,1300,true,8);
+  wait(200,msec);
   driveTo(-42,1750,true,4);
   wait(250,msec);
   upper_intake.spin(fwd,100,pct);
   wait(1000,msec);
   upper_intake.stop(coast);
   match_loader.set(false);
-  driveTo(18,1100,true,6);
-  turnToAngle(225,1000,true,6);
-  driveTo(36,1000,true,6);
+  driveTo(16,1500,true,6);
+  turnToAngle(-225,1250,true,6);
+  driveTo(35,1500,false,5);
   wait(500,msec);
-  lower_intake.stop(coast);
-  driveTo(33,1000,true,6);
-  lower_intake.spin(reverse,25,pct);
-}
-
-void exampleAuton2() {
-   lower_intake.spin(fwd,90, pct);
-  driveTo(46,3000,true,9);
-  wait(200, msec);
-  turnToAngle(90,1000,true,6);
   match_loader.set(true);
-  wait(200, msec);
-  driveTo(18,15000,true,6);
-  wait(700,msec);
-  driveTo(-43,1800,true,5);
-  wait(300,msec);
-  upper_intake.spin(fwd,100,pct);
-  wait(1200,msec);
-  match_loader.set(false);
-  upper_intake.stop(coast);
-  driveTo(26,1500,true,6);
-  turnToAngle(225,1250,true,6);
-  driveTo(36,1000,true,9);
-  wait(2000,msec);
-  turnToAngle(45,750,true,9);
-  driveTo(36,1000,true,9);
-  turnToAngle(90,750,true,9);
-  driveTo(-26,1500,true,6);
-  upper_intake.spin(fwd,100,pct);
+  wait(750,msec);
+  lower_intake.stop(coast);
+  turnToAngle(-40,1250,true,6);
+  driveTo(-18,1250,true,5);
+  middle_piston.set(true);
+  upper_intake.spin(fwd,50,pct);
+  lower_intake.spin(fwd,100,pct);
 }
 
 double arm_pid_target = 0, arm_load_target = 60, arm_store_target = 250, arm_score_target = 470;
