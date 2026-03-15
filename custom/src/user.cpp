@@ -27,10 +27,10 @@ double expoStick(double x, double expo)//function defined with output deci and i
 // Modify autonomous, driver, or pre-auton code below
 
 void runAutonomous() {
-  int auton_selected = 1;
+  int auton_selected = 2;
   switch (auton_selected) {
     case 1:
-      leftAuton();//right
+      leftAuton();//rightslot3
       break;
     case 2:
       exampleAuton2();//left
@@ -42,7 +42,7 @@ void runAutonomous() {
       left_4ball();
       break;
     case 5:
-      break;
+      none();
     case 6:
       break;
     case 7:
@@ -180,8 +180,8 @@ double turn_cap = fast_turn_cap + t * (slow_turn_cap - fast_turn_cap);
 double fwd  = expoStick((double)fwd_raw,  0.0);
 double turn = expoStick((double)turn_raw, 0.0);
 
-double left  = 1.1 * ((fwd * fwd_cap) + (turn * turn_cap));
-double right = 0.9 * ((fwd * fwd_cap) - (turn * turn_cap));
+double left  = ((fwd * fwd_cap) + (turn * turn_cap));
+double right = ((fwd * fwd_cap) - (turn * turn_cap));
 
 left  = std::max(-100.0, std::min(100.0, left));
 right = std::max(-100.0, std::min(100.0, right));
@@ -193,7 +193,7 @@ void runPreAutonomous()
 {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-
+wait(10,msec);
   // Calibrate inertial sensor
   inertial_sensor.calibrate();
 

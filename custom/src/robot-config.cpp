@@ -20,7 +20,7 @@ motor left_chassis1 = motor(PORT15, ratio6_1, true);
 motor left_chassis2 = motor(PORT14, ratio6_1, true);
 motor left_chassis3 = motor(PORT9, ratio6_1, true);
 motor_group left_chassis = motor_group(left_chassis1, left_chassis2, left_chassis3);
-motor right_chassis1 = motor(PORT20, ratio6_1, false);
+motor right_chassis1 = motor(PORT8, ratio6_1, false);
 motor right_chassis2 = motor(PORT18, ratio6_1, false);
 motor right_chassis3 = motor(PORT17, ratio6_1, false);
 motor_group right_chassis = motor_group(right_chassis1, right_chassis2, right_chassis3);
@@ -46,7 +46,7 @@ rotation horizontal_tracker = rotation(PORT13, true);
 rotation vertical_tracker = rotation(PORT19, true);
 
 // game specific devices for high stakes
-motor arm_motor1 = motor(PORT8, ratio18_1, true);
+motor arm_motor1 = motor(PORT20, ratio18_1, true);
 motor arm_motor2 = motor(PORT11, ratio18_1, false);
 motor_group arm_motor = motor_group(arm_motor1, arm_motor2);
 motor intake_motor = motor(PORT12, ratio18_1, true);
@@ -71,7 +71,7 @@ double wheel_distance_in = (36.0/48.0) * 2.75 * M_PI;
 // distance_* : Linear PID for straight driving
 // turn_*     : PID for turning in place
 // heading_correction_* : PID for heading correction during linear movement
-double distance_kp = 1.1, distance_ki = 0.1, distance_kd = 7;
+double distance_kp = 0.3, distance_ki = 0.0, distance_kd = 1.85;
 double turn_kp = 0.3, turn_ki = 0, turn_kd = 2.5;
 double heading_correction_kp = 0.6, heading_correction_ki = 0, heading_correction_kd = 4;
 
