@@ -97,7 +97,37 @@ void alliance_solo() // case 8
   
 }
 
+void SAWP() { 
+  wait(50,msec);
+  driveTo(31,1500,true,12);
+  match_loader.set(true);
+  turnToAngle(90,750,true,12);
+  lower_intake.spin(fwd,100, pct);
+  driveTo(21,1250,true,7);
+  wait(1000,msec);
+  driveTo(-38,1500,true,6);
+  upper_intake.spin(fwd,75,pct);
+  lower_intake.spin(fwd,100,pct);
+  wait(1000,msec);
+  upper_intake.stop(coast);
+  match_loader.set(false);
+  driveTo(18,1500,true,8);
+  turnToAngle(225,750,true,12);
+  driveTo(32,1750,true,7);
+  wait(50,msec);
+  turnToAngle(180,750,true,12);
+  driveTo(46,1750,true,7);
+  turnToAngle(135,750,true,12);
+  driveTo(-26,1500,6);
+  middle_piston.set(false);
+  upper_intake.spin(fwd,75,pct);
+  wait(1000,msec);
+  upper_intake.stop(coast);
+  middle_piston.set(true);
+  driveTo(48,2000,true,7);
+  turnToAngle(90,750,true,12);
 
+}
 void leftAuton() {
   wait(50,msec);
   driveTo(32,1250,true,12);

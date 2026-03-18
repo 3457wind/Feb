@@ -18,43 +18,43 @@ controller controller_1 = controller(primary);
 // such as driveChassis(12, 12)
 motor left_chassis1 = motor(PORT15, ratio6_1, true);
 motor left_chassis2 = motor(PORT14, ratio6_1, true);
-motor left_chassis3 = motor(PORT9, ratio6_1, true);
+motor left_chassis3 = motor(PORT13, ratio6_1, true);
 motor_group left_chassis = motor_group(left_chassis1, left_chassis2, left_chassis3);
-motor right_chassis1 = motor(PORT8, ratio6_1, false);
+motor right_chassis1 = motor(PORT20, ratio6_1, false);
 motor right_chassis2 = motor(PORT18, ratio6_1, false);
 motor right_chassis3 = motor(PORT17, ratio6_1, false);
 motor_group right_chassis = motor_group(right_chassis1, right_chassis2, right_chassis3);
 
-inertial inertial_sensor = inertial(PORT6);
+inertial inertial_sensor = inertial(PORT7);
 
 // RW user control
-motor lower_intake = motor(PORT1, ratio6_1, false);
-motor upper_intake = motor(PORT21, ratio6_1, false);
+motor lower_intake = motor(PORT10, ratio6_1, false);
+motor upper_intake = motor(PORT9, ratio6_1, false);
 digital_out match_loader = digital_out(Brain.ThreeWirePort.A);
 digital_out descore = digital_out(Brain.ThreeWirePort.C);
 digital_out middle_piston = digital_out(Brain.ThreeWirePort.B);
 
 
 // RW Template Stuff
-optical example_optical_sensor = optical(PORT20);
-distance example_distance_sensor = distance(PORT20);
+optical example_optical_sensor = optical(PORT19);
+distance example_distance_sensor = distance(PORT19);
 digital_out example_piston = digital_out(Brain.ThreeWirePort.D);
 
 // Format is rotation(port, reversed)
 // just set these to random ports if no tracking wheels
-rotation horizontal_tracker = rotation(PORT13, true);
+rotation horizontal_tracker = rotation(PORT19, true);
 rotation vertical_tracker = rotation(PORT19, true);
 
 // game specific devices for high stakes
-motor arm_motor1 = motor(PORT20, ratio18_1, true);
+motor arm_motor1 = motor(PORT19, ratio18_1, true);
 motor arm_motor2 = motor(PORT11, ratio18_1, false);
 motor_group arm_motor = motor_group(arm_motor1, arm_motor2);
 motor intake_motor = motor(PORT12, ratio18_1, true);
 digital_out claw = digital_out(Brain.ThreeWirePort.F);
 digital_out rush_arm = digital_out(Brain.ThreeWirePort.G);
-optical optical_sensor = optical(PORT20);
+optical optical_sensor = optical(PORT19);
 distance intake_distance = distance(PORT16);
-distance clamp_distance = distance(PORT20);
+distance clamp_distance = distance(PORT19);
 digital_out mogo_mech = digital_out(Brain.ThreeWirePort.E);
 
 // ============================================================================

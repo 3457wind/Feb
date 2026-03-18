@@ -27,16 +27,16 @@ double expoStick(double x, double expo)//function defined with output deci and i
 // Modify autonomous, driver, or pre-auton code below
 
 void runAutonomous() {
-  int auton_selected = 2;
+  int auton_selected = 3;
   switch (auton_selected) {
     case 1:
-      leftAuton();//rightslot3
+      leftAuton();//rightslot2
       break;
     case 2:
       exampleAuton2();//left
       break;
     case 3:
-      redGoalRush();
+      SAWP();//SAWP_SLOT#3
       break;
     case 4:
       left_4ball();
